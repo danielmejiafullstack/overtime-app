@@ -6,6 +6,10 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
 
+# Mimic helpers provide by devise to generate custom authentication operations inside test
+include Warden::Test::Helpers
+Warden.test_mode!
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
