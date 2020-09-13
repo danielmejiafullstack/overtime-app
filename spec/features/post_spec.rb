@@ -53,4 +53,26 @@ describe 'navigate' do
       expect(user_posts.last.rationale).to eq('user_association')
     end
   end
+
+  describe 'edit' do
+    before do
+      @post = FactoryGirl.create(:post)
+    end
+
+    it 'can be reached by clicking edit on index page' do
+      visit posts_path
+      click_link("edit_#{@post.id}")
+
+      expect(page.status_code).to eq(200)
+    end
+
+    it 'can be edited from a form page successfully' do
+      visit edit_post_path(@post)
+      fill_in 'post[date]', with: Date.today
+      fill_in 'post[rationale]', with: 'Some edited rationale'
+      click_on 'Save'
+
+      expect(page).to have_content('Some edited rationale')
+    end
+  end
 end
